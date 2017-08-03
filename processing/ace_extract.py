@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 import acefile
 from fame.core.module import ProcessingModule
