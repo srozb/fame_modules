@@ -35,7 +35,7 @@ class JS_Deobfuscate(ProcessingModule):
         matches = re.findall(var_pattern, buf)
         for base_sf in matches:
             url_candidate = self.de_base(base_sf)
-            if self.is_url(url_candidate):
+            if url_candidate and self.is_url(url_candidate):
                 url_found = True
                 self.add_ioc("http://{}".format(url_candidate))
 
