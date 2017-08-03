@@ -6,10 +6,10 @@ from fame.core.module import ProcessingModule
 from fame.common.utils import tempdir
 
 
-class Zip(ProcessingModule):
-    name = "JS Deobfuscate (Trickbot)"
+class JS_Deobfuscate(ProcessingModule):
+    name = "js_deobfuscate_trickbot"
     description = "Extract urls from some obfuscated js"
-    acts_on = "js"
+    acts_on = "javascript"
 
     def de_base(self, base_sf):
         base_sf = base_sf.strip('"')
