@@ -1,5 +1,5 @@
 import os
-import acefile
+import magic
 from fame.core.module import ProcessingModule
 from fame.common.utils import tempdir
 
@@ -11,13 +11,15 @@ class ACE_Extract(ProcessingModule):
 
     def is_susp_ace(self, target):
         arch_ext = ['.rar', '.zip', '.arj']
-        return target[-4:].lower() in arch_ext and acefile.is_acefile(target)
+        return target[-4:].lower() in arch_ext and magic.from_file(target).startswith('ACE')
 
     def extract(self, target):
-        os.chdir(tempdir())
-        with acefile.open(target) as arch:
-            arch.extractall()
-            return arch.getnames()
+        tempdir = tempdir()
+        os.system("acefile-unace -d {} -x {}".format(tempdir, target))
+        files = os.popen("acefile-unace -l {}".format(target)).read().split('\n')
+        for i in range(len(files)):
+            files[i] = tempdir + '/' + files[i]
+        return files
 
     def each(self, target):
         if self.is_susp_ace(target):
@@ -25,3 +27,4 @@ class ACE_Extract(ProcessingModule):
             files = self.extract(target)
             for f in files:
                 self.add_extracted_file(f)
+            return True
