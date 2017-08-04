@@ -7,7 +7,6 @@ from fame.common.utils import tempdir
 class ACE_Extract(ProcessingModule):
     name = "ace-extract"
     description = "Extract disguised ace archives"
-    acts_on = None
 
     def is_susp_ace(self, target):
         arch_ext = ['.rar', '.zip', '.arj']
