@@ -24,6 +24,7 @@ class ACE_Extract(ProcessingModule):
         if self.is_susp_ace(target):
             self.add_tag('ACE_disguised')
             files = self.extract(target)
-            for f in files[:-1]:  # remove last line (it's tempdir)
-                self.add_extracted_file(f)
+            for f in files:
+                if os.path.isfile(f):
+                    self.add_extracted_file(f)
             return True
