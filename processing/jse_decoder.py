@@ -11,7 +11,8 @@ class JSE_Decode(ProcessingModule):
         if not target.lower().endswith('.jse'):
             return False
         tmpdir = tempdir()
-        os.system('fame/modules/srozb/processing/decoder {} {}/{}'.format(
-            target, tmpdir, target[:-1]))
-        self.add_extracted_file("{}/{}".format(tmpdir, target[:-1]))
+        dest_file = "{}/{}".format(tmpdir, target[:-1])
+        os.system('fame/modules/srozb/processing/decoder {} {}'.format(
+            target, dest_file))
+        self.add_extracted_file(dest_file)
         return True
