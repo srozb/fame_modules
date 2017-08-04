@@ -6,7 +6,7 @@ from fame.common.utils import tempdir
 class JSE_Decode(ProcessingModule):
     name = "jse-decode"
     description = "Decode JScript.Encoded file"
-    acts_on = "jse"
+    acts_on = "data"
 
     def each(self, target):
         if not target.lower().endswith('.jse'):
