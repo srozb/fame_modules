@@ -8,9 +8,13 @@ class ACE_Extract(ProcessingModule):
     name = "ace-extract"
     description = "Extract disguised ace archives"
 
-    def is_susp_ace(self, target):
+    def is_ace(self, target):
+        return magic.from_file(target).startswith('ACE')
+
+    def add_tag_if_disguised(self, target):
         arch_ext = ['.rar', '.zip', '.arj']
-        return target[-4:].lower() in arch_ext and magic.from_file(target).startswith('ACE')
+        if target[-4:].lower() in arch_ext:
+            self.add_tag('ACE_disguised')
 
     def extract(self, target):
         tmpdir = tempdir()
@@ -21,8 +25,8 @@ class ACE_Extract(ProcessingModule):
         return files
 
     def each(self, target):
-        if self.is_susp_ace(target):
-            self.add_tag('ACE_disguised')
+        if self.is_ace(target):
+            self.add_tag_if_disguised(target)
             files = self.extract(target)
             for f in files:
                 if os.path.isfile(f):
