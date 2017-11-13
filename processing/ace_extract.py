@@ -9,6 +9,8 @@ class ACE_Extract(ProcessingModule):
     description = "Extract disguised ace archives"
 
     def is_ace(self, target):
+        if "://" in target and target.lower().startswith("http"):
+            return False
         return magic.from_file(target).startswith('ACE')
 
     def add_tag_if_disguised(self, target):
